@@ -39,7 +39,7 @@ public class EmployeeDao {
         operations.multi();
         operations.opsForZSet().removeRangeByScore(key, 0, currentTime - slidingWindowTime);
         operations.opsForZSet().add(key, Long.toString(currentTime), currentTime);
-        operations.expire(key, currentTime + slidingWindowTime, TimeUnit.MICROSECONDS);
+        operations.expire(key, currentTime + slidingWindowTime, TimeUnit.MILLISECONDS);
         redisTemplate.opsForZSet().range(key, 0, -1);
         return operations.exec();
       }
